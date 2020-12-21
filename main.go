@@ -11,7 +11,7 @@ import (
 )
 
 var global = map[string]int{}
-var MapConchandling = sync.RWMutex{}
+var MapConcHandling = sync.RWMutex{}
 
 func GetTokens(waitGroup *sync.WaitGroup, datas []string, result chan []string) {
 	defer waitGroup.Done()
@@ -44,7 +44,7 @@ func SummarizeCount(waitGroup *sync.WaitGroup, data <-chan map[string]int) {
 	defer waitGroup.Done()
 	dataDicts := <-data
 
-	MapConchandling.Lock()
+	MapConcHandling.Lock()
 	for key, value := range dataDicts {
 		if val, ok := global[key]; ok {
 			//do something here
@@ -53,7 +53,7 @@ func SummarizeCount(waitGroup *sync.WaitGroup, data <-chan map[string]int) {
 			global[key] = value
 		}
 	}
-	MapConchandling.Unlock()
+	MapConcHandling.Unlock()
 }
 func main() {
 	log.Println("Readfile")
@@ -74,7 +74,7 @@ func main() {
 	scanner := bufio.NewScanner(file)
 	log.Println("processing file")
 	start := time.Now()
-	
+
 	for scanner.Scan() {
 		datas = append(datas, scanner.Text())
 		if len(datas) == 5 {
